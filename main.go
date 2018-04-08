@@ -15,11 +15,25 @@ import (
 	"golang.org/x/net/websocket"
 )
 
+/*
+	iota是一个静态计数器，只能用在常量声明中，作用是，每次用过iota之后，当前常量值被置为0，随后出现的常量依次+1
+	比如下面常量值queryLatest = 0, queryAll = 1, responseBlockchain = 2
+*/
+
 const (
 	queryLatest = iota
 	queryAll
 	responseBlockchain
 )
+
+/*
+	&的写法表示当前声明的变量genesisBlock是Block实例的一个指针，指向了创世块Block的地址, Block是golang中的一个数据结构struct,
+	在后面进行了声明，对于struct的声明形式是：
+	type <struct name> struct{  注意大括号必须和声明语句在同一行
+		<variable name> <varible type>  声明时候每一行没有逗号
+	}
+	实例化的时候，如下面，每一行有逗号，最后一行也必须有逗号
+*/
 
 var genesisBlock = &Block{
 	Index:        0,
