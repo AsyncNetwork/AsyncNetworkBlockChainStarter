@@ -19,7 +19,6 @@ import (
 	iota是一个静态计数器，只能用在常量声明中，作用是，每次用过iota之后，当前常量值被置为0，随后出现的常量依次+1
 	比如下面常量值queryLatest = 0, queryAll = 1, responseBlockchain = 2
 */
-
 const (
 	queryLatest = iota
 	queryAll
@@ -34,7 +33,6 @@ const (
 	}
 	实例化的时候，如下面，每一行有逗号，最后一行也必须有逗号
 */
-
 var genesisBlock = &Block{
 	Index:        0,
 	PreviousHash: "0",
@@ -47,7 +45,6 @@ var genesisBlock = &Block{
 	flag 是第三方的库，作用是解析程序启动时候传入的参数，需要注意的是，具体什么参数可以被解析是需要提前注册的
 	如下面的使用例子这样，并且可以给定一个默认值，和一个解释
 */
-
 var (
 	sockets      []*websocket.Conn
 	blockchain   = []*Block{genesisBlock}
@@ -59,8 +56,8 @@ var (
 /*
 	结构体的声明，其中需要注意的是`` 符号的使用, 这是golang语句中的TAG用法, TAG可以使用反射机制去获取, 如：
 	myBlock := Block{}
-    myBlockType := reflect.TypeOf(myBlock)
-    field := myBlockType.Field(0)
+	myBlockType := reflect.TypeOf(myBlock)
+	field := myBlockType.Field(0)
 	fmt.Println(field.Tag.Get("json"))
 	
 	TAG也可以有多个，中间用空格隔开，如下面Index字段也可以这样写
@@ -68,7 +65,6 @@ var (
 	取的时候，对应使用
 	fmt.Println(field.Tag.Get("json"), field.TAG.Get("primaryKey"))
 */
-
 type Block struct {
 	Index        int64  `json:"index"`
 	PreviousHash string `json:"previousHash"`
@@ -77,6 +73,9 @@ type Block struct {
 	Hash         string `json:"hash"`
 }
 
+/*
+	打印一个区块, 注意返回语句中使用的是 Sprintf 和Println不同的是，Println是往os.Stdout输出，Sprintf直接返回字符串，不进行控制台输出
+*/
 func (b *Block) String() string {
 	return fmt.Sprintf("index: %d,previousHash:%s,timestamp:%d,data:%s,hash:%s", b.Index, b.PreviousHash, b.Timestamp, b.Data, b.Hash)
 }
