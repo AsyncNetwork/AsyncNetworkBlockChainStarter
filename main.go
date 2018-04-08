@@ -43,6 +43,11 @@ var genesisBlock = &Block{
 	Hash:         "816534932c2b7154836da6afc367695e6337db8a921823784c14378abed4f7d7",
 }
 
+/*
+	flag 是第三方的库，作用是解析程序启动时候传入的参数，需要注意的是，具体什么参数可以被解析是需要提前注册的
+	如下面的使用例子这样，并且可以给定一个默认值，和一个解释
+*/
+
 var (
 	sockets      []*websocket.Conn
 	blockchain   = []*Block{genesisBlock}
@@ -50,6 +55,19 @@ var (
 	p2pAddr      = flag.String("p2p", ":6001", "p2p server address.")
 	initialPeers = flag.String("peers", "ws://localhost:6001", "initial peers")
 )
+
+/*
+	结构体的声明，其中需要注意的是`` 符号的使用, 这是golang语句中的TAG用法, TAG可以使用反射机制去获取, 如：
+	myBlock := Block{}
+    myBlockType := reflect.TypeOf(myBlock)
+    field := myBlockType.Field(0)
+	fmt.Println(field.Tag.Get("json"))
+	
+	TAG也可以有多个，中间用空格隔开，如下面Index字段也可以这样写
+	Index int64 `json:"index" primaryKey: true`
+	取的时候，对应使用
+	fmt.Println(field.Tag.Get("json"), field.TAG.Get("primaryKey"))
+*/
 
 type Block struct {
 	Index        int64  `json:"index"`
